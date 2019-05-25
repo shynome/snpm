@@ -1,19 +1,10 @@
 package tools
 
 import (
-	"encoding/json"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"testing"
 )
-
-func readJSONFile(f string) map[string]interface{} {
-	file, _ := ioutil.ReadFile(f)
-	data := map[string]interface{}{}
-	json.Unmarshal(file, &data)
-	return data
-}
 
 func TestMakeEnv(t *testing.T) {
 
@@ -21,7 +12,7 @@ func TestMakeEnv(t *testing.T) {
 
 	f := FindPackagePath(filepath.Join(wd, "../test/p"))
 
-	data := readJSONFile(f)
+	data := ReadJSONFile(f)
 
 	env := map[string]string{}
 
