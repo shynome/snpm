@@ -17,9 +17,9 @@ func readJSONFile(f string) object {
 
 func TestMakeEnv(t *testing.T) {
 
-	pwd, _ := os.Getwd()
+	wd, _ := os.Getwd()
 
-	f := FindPackagePath(filepath.Join(pwd, "../test/p"))
+	f := FindPackagePath(filepath.Join(wd, "../test/p"))
 
 	data := readJSONFile(f)
 

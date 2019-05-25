@@ -7,20 +7,20 @@ import (
 const packageJSON = "package.json"
 
 // FindPackagePath find package.json path
-func FindPackagePath(pwd string) string {
+func FindPackagePath(wd string) string {
 
-	f := filepath.Join(pwd, packageJSON)
+	f := filepath.Join(wd, packageJSON)
 
 	if FileExists(f) {
 		return f
 	}
 
-	newPwd := filepath.Join(pwd, "../")
+	newWd := filepath.Join(wd, "../")
 
-	if newPwd == pwd {
+	if newWd == wd {
 		return ""
 	}
 
-	return FindPackagePath(newPwd)
+	return FindPackagePath(newWd)
 
 }

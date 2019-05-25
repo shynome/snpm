@@ -8,7 +8,7 @@ import (
 
 func TestFindPackagePath(t *testing.T) {
 
-	pwd, _ := os.Getwd()
+	wd, _ := os.Getwd()
 
 	testCase := [][2]string{
 		{"../test/p/", "../test/p/"},
@@ -19,8 +19,8 @@ func TestFindPackagePath(t *testing.T) {
 
 	for _, v := range testCase {
 
-		p1 := FindPackagePath(filepath.Join(pwd, v[0]))
-		p2 := filepath.Join(pwd, v[1], packageJSON)
+		p1 := FindPackagePath(filepath.Join(wd, v[0]))
+		p2 := filepath.Join(wd, v[1], packageJSON)
 		if v[1] == "" {
 			p2 = ""
 		}
