@@ -1,6 +1,7 @@
 package snpm
 
 import (
+	"encoding/json"
 	"fmt"
 	"os"
 	"os/exec"
@@ -41,7 +42,13 @@ func Exec(stage string, args []string, pkg Package) (err error) {
 		stage,
 		pkg.DIR,
 	)
-	fmt.Printf("> %v \n", cmd)
+	printArgsByte, err := json.Marshal(args)
+	if err != nil {
+		return
+	}
+	printArgs := string(printArgsByte[2 : len(printArgsByte)-2])
+	printArgs = strings.ReplaceAll(printArgs, `","`, `" "`)
+	fmt.Printf("> %v \"%v\" ", cmd, printArgs)
 	if err = runCmd(cmd, args, env, pkg); err != nil {
 		return err
 	}
@@ -58,6 +65,7 @@ func Exec(stage string, args []string, pkg Package) (err error) {
 }
 
 func runCmd(cmd string, args []string, env []string, pkg Package) error {
+
 	args = append([]string{"-c", cmd}, args...)
 
 	proc := exec.Command("sh", args...)
