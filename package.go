@@ -54,7 +54,7 @@ func NewPackage(wd string) (Package, error) {
 func (pkg Package) getEnv() []string {
 	env := []string{}
 	for i, v := range pkg.ENV {
-		env = append(env, fmt.Sprintf("%v='%v'", i, v))
+		env = append(env, fmt.Sprintf("%v=%v", i, v))
 	}
 	return env
 }
