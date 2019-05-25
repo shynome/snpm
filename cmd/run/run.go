@@ -26,8 +26,8 @@ func init() {
 }
 
 // Run npm script
-func Run(stage string) func(*cli.Context) {
-	return func(c *cli.Context) {
-		snpm.Exec(stage, c.Args(), common.Pkg)
+func Run(stage string) func(*cli.Context) error {
+	return func(c *cli.Context) error {
+		return snpm.Exec(stage, c.Args(), common.Pkg)
 	}
 }
