@@ -6,6 +6,7 @@
   "scripts": {
     "prestart": "echo prestart",
     "start": "echo start",
-    "poststart": "echo poststart"
+    "poststart": "echo poststart",
+    "args": "sh a.sh"
   }
 }
