@@ -2,5 +2,10 @@
   "name": "test",
   "config": {
     "port": 8080
+  },
+  "scripts": {
+    "prestart": "echo prestart",
+    "start": "echo start",
+    "poststart": "echo poststart"
   }
 }
