@@ -46,9 +46,7 @@ func Exec(stage string, args []string, pkg Package) (err error) {
 	if err != nil {
 		return
 	}
-	printArgs := string(printArgsByte[2 : len(printArgsByte)-2])
-	printArgs = strings.ReplaceAll(printArgs, `","`, `" "`)
-	fmt.Printf("> %v \"%v\" ", cmd, printArgs)
+	fmt.Printf("> %v \"%v\" \n", cmd, string(printArgsByte))
 	if err = runCmd(cmd, args, env, pkg); err != nil {
 		return err
 	}
@@ -69,7 +67,7 @@ func runCmd(cmd string, args []string, env []string, pkg Package) error {
 	args = append([]string{"-c", cmd}, args...)
 
 	proc := exec.Command("sh", args...)
-	proc.Env = append(proc.Env, env...)
+	proc.Env = append(os.Environ(), env...)
 	proc.Dir = pkg.DIR
 	proc.Stdin = os.Stdin
 	proc.Stdout = os.Stdout
