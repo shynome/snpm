@@ -5,10 +5,8 @@ import (
 	"os"
 )
 
-type object map[string]interface{}
-
 // MakeEnv generate env
-func MakeEnv(data object, prefix string, env *(map[string]string)) {
+func MakeEnv(data map[string]interface{}, prefix string, env *(map[string]string)) {
 
 	for i, v := range data {
 

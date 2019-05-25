@@ -8,9 +8,9 @@ import (
 	"testing"
 )
 
-func readJSONFile(f string) object {
+func readJSONFile(f string) map[string]interface{} {
 	file, _ := ioutil.ReadFile(f)
-	data := object{}
+	data := map[string]interface{}{}
 	json.Unmarshal(file, &data)
 	return data
 }
