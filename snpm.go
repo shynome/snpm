@@ -64,7 +64,7 @@ func Exec(stage string, args []string, pkg Package) (err error) {
 
 func runCmd(cmd string, args []string, env []string, pkg Package) error {
 
-	args = append([]string{"-c", cmd}, args...)
+	args = append([]string{"-c", cmd + " " + strings.Join(args, " ")})
 
 	proc := exec.Command("sh", args...)
 	proc.Env = append(os.Environ(), env...)
