@@ -74,10 +74,23 @@ func runCmd(cmd string, args []string, env []string, pkg Package) error {
 	proc.Stderr = os.Stderr
 
 	sigs := make(chan os.Signal, 1)
-	signal.Notify(sigs, syscall.SIGHUP, syscall.SIGINT, syscall.SIGQUIT, syscall.SIGILL, syscall.SIGTRAP, syscall.SIGABRT, syscall.SIGBUS, syscall.SIGFPE, syscall.SIGKILL, syscall.SIGSEGV, syscall.SIGPIPE, syscall.SIGALRM, syscall.SIGTERM)
+	signal.Notify(sigs,
+		syscall.SIGHUP,  //终端控制进程结束(终端连接断开)
+		syscall.SIGINT,  //用户发送INTR字符(Ctrl+C)触发
+		syscall.SIGQUIT, //用户发送QUIT字符(Ctrl+/)触发
+		syscall.SIGABRT, //调用abort函数触发
+		syscall.SIGKILL, //无条件结束程序(不能被捕获、阻塞或忽略)
+		syscall.SIGPIPE, //消息管道损坏(FIFO/Socket通信时，管道未打开而进行写操作)
+		syscall.SIGTERM, //结束程序(可以被捕获、阻塞或忽略)
+	)
 	handleSIGTERM := func() {
-		<-sigs
-		proc.Process.Kill()
+		for {
+			if proc.ProcessState != nil && proc.ProcessState.Exited() {
+				break
+			}
+			sig := <-sigs
+			proc.Process.Signal(sig)
+		}
 	}
 	go handleSIGTERM()
 
